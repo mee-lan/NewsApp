@@ -28,7 +28,10 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 
-fun OnBoardingScreen(modifier: Modifier = Modifier) {
+fun OnBoardingScreen(
+    modifier: Modifier = Modifier,
+    event: (OnBoardingEvent) -> Unit
+) {
     Column(modifier = modifier.fillMaxSize(1f)) {
         val pagerState = rememberPagerState(0) {
             pages.size
@@ -39,7 +42,7 @@ fun OnBoardingScreen(modifier: Modifier = Modifier) {
                     0 -> listOf("", "Next")
                     1 -> listOf("Back", "Next")
                     2 -> listOf("Back", "Get Started")
-                    else -> listOf("","")
+                    else -> listOf("", "")
                 }
             }
         }
@@ -47,7 +50,6 @@ fun OnBoardingScreen(modifier: Modifier = Modifier) {
             OnBoardingPage(page = pages[index])
         }
         Spacer(modifier = modifier.weight(1f))
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -74,8 +76,8 @@ fun OnBoardingScreen(modifier: Modifier = Modifier) {
                 Spacer(modifier = Modifier.width(Dimens.MediumPadding2))
                 NewsButton(text = buttonState.value[1], onClick = {
                     scope.launch {
-                        if (pagerState.currentPage == 3) {
-                            //TODO
+                        if (pagerState.currentPage == 2) {
+                            event(OnBoardingEvent.SaveAppEntry)
                         } else {
                             pagerState.animateScrollToPage(page = pagerState.currentPage + 1)
                         }
@@ -87,8 +89,3 @@ fun OnBoardingScreen(modifier: Modifier = Modifier) {
     }
 }
 
-@Preview
-@Composable
-fun preview(modifier: Modifier = Modifier) {
-    OnBoardingScreen()
-}
