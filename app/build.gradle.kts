@@ -66,12 +66,25 @@ dependencies {
     //Dagger-Hilt
     implementation("com.google.dagger:hilt-android:2.51.1")
     implementation ("androidx.hilt:hilt-navigation-compose:1.2.0") // For Compose integration
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7") // For ViewModel Compose integration
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
+    implementation(libs.androidx.paging.compose.android) // For ViewModel Compose integration
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
+
+    //RetroFit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
 
 
     //Splash Api
     implementation ("androidx.core:core-splashscreen:1.0.0")
+
+    //Paging
+    implementation("androidx.paging:paging-runtime:3.3.2")
+
+    //Gson converter factory
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    //Coil
+    implementation("io.coil-kt:coil-compose:2.5.0")
 
     //preferences datastore
     implementation ("androidx.datastore:datastore-preferences:1.1.1")

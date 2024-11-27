@@ -18,7 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.example.mynews.presentation.Dimens
 import com.example.mynews.presentation.common.NewsButton
 import com.example.mynews.presentation.common.NewsTextButton
 import com.example.mynews.presentation.onboarding.components.OnBoardingPage

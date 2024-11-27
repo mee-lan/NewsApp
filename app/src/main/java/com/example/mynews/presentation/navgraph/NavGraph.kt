@@ -17,8 +17,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.mynews.presentation.home.HomeScreen
+import com.example.mynews.presentation.home.HomeViewModel
 import com.example.mynews.presentation.onboarding.OnBoardingScreen
 import com.example.mynews.presentation.onboarding.OnBoardingViewModel
+import com.example.mynews.presentation.search.SearchScreen
+import com.example.mynews.presentation.search.SearchState
+import com.example.mynews.presentation.search.SearchViewModel
 
 @Composable
 fun NavGraph(
@@ -50,11 +56,8 @@ fun NavGraph(
             startDestination = Route.NewsNavigatorScreen.route
         ){
             composable(route = Route.NewsNavigatorScreen.route){
-                Box(modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Red), contentAlignment = Alignment.Center){
-                    Text(text = "NewsNavigatorScreen", style = MaterialTheme.typography.displaySmall)
-                }
+                val viewModel: SearchViewModel = hiltViewModel()
+                SearchScreen(state = viewModel.state.value, event =viewModel::onEvent, navigate = {})
             }
         }
     }
