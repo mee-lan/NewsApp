@@ -10,18 +10,45 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.lifecycleScope
+import com.example.mynews.data.local.NewsDao
+import com.example.mynews.domain.model.Article
+import com.example.mynews.domain.model.Source
 import com.example.mynews.presentation.navgraph.NavGraph
 import com.example.mynews.ui.theme.MyNewsTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class  MainActivity : ComponentActivity() {
-    val viewModel by viewModels<MainViewModel>()
 
+    @Inject
+    lateinit var dao:NewsDao
+
+    val viewModel by viewModels<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        lifecycleScope.launch {
+            dao.upsert(
+                Article(
+                    author = "Hari",
+                    title = "A huge fire lalitpur killed 60 people",
+                    content = "A huge fire was seen at lalitpur which killed 60 people. And further investigation in going on. A huge fire was seen at lalitpur which killed 60 people. And further investigation in going on. A huge fire was seen at lalitpur which killed 60 people. And further investigation in going on",
+                    description = "A huge fire was seen at lalitpur which killed 60 people. And further investigation in going on . ",
+                    publishedAt = "2:30",
+                    source = Source("1", "Kantipur"),
+                    url = "",
+                    urlToImage = ""
+                )
+            )
+
+        }
+
+
         installSplashScreen().apply {
             setKeepOnScreenCondition(condition = {
                 viewModel.splashCondition
