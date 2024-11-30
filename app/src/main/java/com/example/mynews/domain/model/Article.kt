@@ -2,6 +2,9 @@ package com.example.mynews.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.versionedparcelable.ParcelField
+import androidx.versionedparcelable.VersionedParcelize
+
 
 
 @Entity

@@ -14,9 +14,13 @@ import com.example.mynews.domain.manager.LocalUserManager
 import com.example.mynews.domain.manager.usecases.app_entry.AppEntryUseCases
 import com.example.mynews.domain.manager.usecases.app_entry.ReadAppEntry
 import com.example.mynews.domain.manager.usecases.app_entry.SaveAppEntry
+import com.example.mynews.domain.manager.usecases.news.DeleteArticle
 import com.example.mynews.domain.manager.usecases.news.GetNews
 import com.example.mynews.domain.manager.usecases.news.NewsUseCases
 import com.example.mynews.domain.manager.usecases.news.SearchNews
+import com.example.mynews.domain.manager.usecases.news.SelectArticle
+import com.example.mynews.domain.manager.usecases.news.SelectArticles
+import com.example.mynews.domain.manager.usecases.news.UpsertArticle
 import com.example.mynews.domain.respository.NewsRepository
 import com.example.mynews.util.Constants
 import com.example.mynews.util.Constants.BASE_URL
@@ -66,11 +70,16 @@ object AppModule {
     @Provides
     @Singleton
     fun provideNewsUseCases(
-        newsRepository: NewsRepository
+        newsRepository: NewsRepository,
+        newsDao: NewsDao
     ): NewsUseCases {
         return NewsUseCases(
             getNews = GetNews(newsRepository = newsRepository),
-            searchNews = SearchNews(newsRepository=newsRepository)
+            searchNews = SearchNews(newsRepository=newsRepository),
+            selectArticles = SelectArticles(newsDao = newsDao),
+            upsertArticle = UpsertArticle(newsDao=newsDao),
+            deleteArticle = DeleteArticle(newsDao= newsDao),
+            selectArticle = SelectArticle(newsDao=newsDao)
         )
     }
 
@@ -95,6 +104,5 @@ object AppModule {
     ):NewsDao{
         return newsDatabase.newsDao
     }
-
 
 }

@@ -92,6 +92,9 @@ dependencies {
     kapt("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-paging:2.6.1")
 
+    //parcelize
+    implementation("kotlinx.parcelize:parcelize:1.7.2")
+
     //preferences datastore
     implementation ("androidx.datastore:datastore-preferences:1.1.1")
     implementation(libs.androidx.datastore.core.android)
