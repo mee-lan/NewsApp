@@ -1,5 +1,5 @@
 <h1>News APP</h1>
-<p> A clean architecture app made from scratch In Kotlin </p>
+<p> A clean MVVM architecture News App made from scratch In Kotlin </p>
 <ul>
   <li>MVVM Architecture</li>
   <li>Room Database</li>
