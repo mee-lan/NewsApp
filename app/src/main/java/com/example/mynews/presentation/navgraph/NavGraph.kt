@@ -23,6 +23,7 @@ import com.example.mynews.presentation.bookmark.BookmarkViewModel
 import com.example.mynews.presentation.details.DetailsScreen
 import com.example.mynews.presentation.home.HomeScreen
 import com.example.mynews.presentation.home.HomeViewModel
+import com.example.mynews.presentation.news_navigator.NewsNavigator
 import com.example.mynews.presentation.onboarding.OnBoardingScreen
 import com.example.mynews.presentation.onboarding.OnBoardingViewModel
 import com.example.mynews.presentation.search.SearchScreen
@@ -59,10 +60,7 @@ fun NavGraph(
             startDestination = Route.NewsNavigatorScreen.route
         ){
             composable(route = Route.NewsNavigatorScreen.route){
-                val viewModel: BookmarkViewModel = hiltViewModel()
-                BookmarkScreen(state = viewModel.state.value, navigate = {
-                    navController.navigate(it)
-                })
+                NewsNavigator()
             }
         }
     }

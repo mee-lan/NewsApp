@@ -85,10 +85,10 @@ fun HandlePagingResult(
 
 @Composable
 private fun ShimmerEffect(modifier: Modifier = Modifier) {
-    Column(verticalArrangement = Arrangement.spacedBy(Dimens.smallPadding)) {
+    Column(verticalArrangement = Arrangement.spacedBy(Dimens.smallPadding2)) {
         repeat(10){
             ArticleCardShimmerEffect(
-                modifier = Modifier.padding(horizontal = Dimens.smallPadding)
+                modifier = Modifier.padding(horizontal = Dimens.MediumPadding1)
             )
         }
 

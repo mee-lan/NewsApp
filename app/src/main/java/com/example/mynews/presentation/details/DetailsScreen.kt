@@ -52,23 +52,30 @@ fun DetailsScreen(
             onBrowsingClick = {
                               Intent(Intent.ACTION_VIEW).also {
                                   it.data = Uri.parse(article.url)
-                                  if(it.resolveActivity(context.packageManager)!=null){
+                                  //if(it.resolveActivity(context.packageManager)!=null){
                                       context.startActivity(it)
-                                  }
+                                  //}
                               }
             },
             onBookmarkClick = {
                               event(DetailsEvent.UpsertDeleteArticle(article))
             },
             onShareClick = {
-
-                Intent(Intent.ACTION_SENDTO).also {
-                    it.putExtra(Intent.EXTRA_TEXT,article.url)
-                    it.type= "text/plain"
-                    if(it.resolveActivity(context.packageManager)!=null){
-                        context.startActivity(it)
-                    }
+//                Intent(Intent.ACTION_SENDTO).also {
+//                    it.putExtra(Intent.EXTRA_TEXT,article.url)
+//                    it.type= "text/plain"
+//                    if(it.resolveActivity(context.packageManager)!=null){
+//                        context.startActivity(it)
+//                    }
+//                }
+                val sendIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, article.url)
+                    type = "text/plain"
                 }
+
+                val shareIntent = Intent.createChooser(sendIntent, null)
+                context.startActivity(shareIntent)
             },
             onBackClick = navigateUp
             )

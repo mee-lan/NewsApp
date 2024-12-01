@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import com.example.mynews.R
+import com.example.mynews.domain.model.Article
 import com.example.mynews.presentation.Dimens
 import com.example.mynews.presentation.common.ArticleCard
 import com.example.mynews.presentation.common.ArticlesList
@@ -23,7 +24,7 @@ import com.example.mynews.presentation.navgraph.Route
 fun BookmarkScreen(
     modifier: Modifier = Modifier,
     state: BookmarkState,
-    navigate: (String)->Unit
+    navigateToDetails: (Article)->Unit
 ) {
 
     Column(
@@ -44,7 +45,7 @@ fun BookmarkScreen(
         )
         Spacer(modifier = Modifier.height(Dimens.MediumPadding1))
         
-        ArticlesList(articles = state.articles, onClick = {navigate(Route.DetailsScreen.route)})
+        ArticlesList(articles = state.articles, onClick = {navigateToDetails(it)})
 
     }
 }

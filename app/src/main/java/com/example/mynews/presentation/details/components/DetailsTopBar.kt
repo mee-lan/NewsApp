@@ -36,6 +36,7 @@ fun DetailsTopBar(
     onBackClick: ()->Unit
     ) {
     TopAppBar(
+
         title = { Text(text = "Details", style = MaterialTheme.typography.titleMedium)},
         modifier=Modifier.fillMaxWidth(),
         colors = TopAppBarDefaults.mediumTopAppBarColors(
@@ -50,14 +51,14 @@ fun DetailsTopBar(
             }
         },
         actions = {
-            IconButton(onClick = onBackClick) {
+            IconButton(onClick = onBookmarkClick) {
                 Icon(painter = painterResource(id = R.drawable.ic_bookmark),
                     contentDescription = null)
             }
-            IconButton(onClick = onBackClick) {
+            IconButton(onClick = onShareClick) {
               Icon(imageVector = Icons.Default.Share, contentDescription = null)
             }
-            IconButton(onClick = onBackClick) {
+            IconButton(onClick = onBrowsingClick) {
                 Icon(painter = painterResource(id = R.drawable.ic_network),
                     contentDescription = null)
             }

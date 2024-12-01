@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -20,6 +22,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -54,8 +57,17 @@ fun HomeScreen(articles: LazyPagingItems<Article>,navigateToSearch: ()->Unit,nav
             .statusBarsPadding()
     ) {
 
+        Image(
+            painter = painterResource(id = R.drawable.logo1),
+            contentDescription = null,
+            modifier = Modifier
+                .height(50.dp)
+                .width(150.dp)
+                .padding(horizontal = Dimens.MediumPadding1, vertical = Dimens.smallPadding),
+            contentScale = ContentScale.Crop
+            )
          SearchBar(text = "",
-             modifier = Modifier.padding(horizontal = Dimens.smallPadding),
+             modifier = Modifier.padding(horizontal = Dimens.MediumPadding1),
              readOnly = true,
              onValueChange = {},
              onSearch = {},
@@ -66,13 +78,12 @@ fun HomeScreen(articles: LazyPagingItems<Article>,navigateToSearch: ()->Unit,nav
 
          Spacer(modifier = Modifier.height(Dimens.smallPadding))
 
-
          Text(text = titles,
              style = MaterialTheme.typography.bodyMedium,
              color = colorResource(id = R.color.body),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(Dimens.smallPadding)
+                .padding(horizontal = Dimens.MediumPadding1)
                 .basicMarquee()
          )
         ArticlesList(
@@ -83,5 +94,5 @@ fun HomeScreen(articles: LazyPagingItems<Article>,navigateToSearch: ()->Unit,nav
             }
         )
     }
-    
+
 }

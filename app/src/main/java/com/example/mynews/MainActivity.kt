@@ -24,29 +24,12 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class  MainActivity : ComponentActivity() {
 
-    @Inject
-    lateinit var dao:NewsDao
 
     val viewModel by viewModels<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        lifecycleScope.launch {
-            dao.upsert(
-                Article(
-                    author = "Hari",
-                    title = "A huge fire lalitpur killed 60 people",
-                    content = "A huge fire was seen at lalitpur which killed 60 people. And further investigation in going on. A huge fire was seen at lalitpur which killed 60 people. And further investigation in going on. A huge fire was seen at lalitpur which killed 60 people. And further investigation in going on",
-                    description = "A huge fire was seen at lalitpur which killed 60 people. And further investigation in going on . ",
-                    publishedAt = "2:30",
-                    source = Source("1", "Kantipur"),
-                    url = "",
-                    urlToImage = ""
-                )
-            )
-
-        }
 
 
         installSplashScreen().apply {

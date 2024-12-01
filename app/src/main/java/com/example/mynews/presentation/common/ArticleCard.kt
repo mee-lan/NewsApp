@@ -55,7 +55,6 @@ fun ArticleCard(
         )
 
 
-
         Column(
             verticalArrangement = Arrangement.SpaceAround,
             modifier = Modifier

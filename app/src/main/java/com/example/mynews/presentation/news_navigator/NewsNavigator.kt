@@ -1,5 +1,6 @@
 package com.example.mynews.presentation.news_navigator
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
@@ -20,15 +22,21 @@ import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.mynews.R
 import com.example.mynews.domain.model.Article
+import com.example.mynews.presentation.bookmark.BookmarkScreen
+import com.example.mynews.presentation.bookmark.BookmarkViewModel
+import com.example.mynews.presentation.details.DetailsEvent
+import com.example.mynews.presentation.details.DetailsScreen
+import com.example.mynews.presentation.details.DetailsViewModel
 import com.example.mynews.presentation.home.HomeScreen
 import com.example.mynews.presentation.home.HomeViewModel
 import com.example.mynews.presentation.navgraph.Route
 import com.example.mynews.presentation.news_navigator.components.BottomNavigationItem
 import com.example.mynews.presentation.news_navigator.components.NewsBottomNavigation
+import com.example.mynews.presentation.search.SearchScreen
+import com.example.mynews.presentation.search.SearchViewModel
 
 @Composable
 fun NewsNavigator(modifier: Modifier = Modifier) {
-
     val bottomNavigationItems = remember {
         listOf(
             BottomNavigationItem(
@@ -37,11 +45,11 @@ fun NewsNavigator(modifier: Modifier = Modifier) {
             ),
             BottomNavigationItem(
                 R.drawable.ic_search,
-                text = "Home"
+                text = "Search"
             ),
             BottomNavigationItem(
                 R.drawable.ic_bookmark,
-                text = "Home"
+                text = "Bookmarks"
             )
         )
     }
@@ -60,7 +68,7 @@ fun NewsNavigator(modifier: Modifier = Modifier) {
         Route.HomeScreen.route -> 0
         Route.SearchScreen.route ->1
         Route.BookmarkScreen.route->2
-        else ->2
+        else ->0
     }
 
     Scaffold(
@@ -79,7 +87,7 @@ fun NewsNavigator(modifier: Modifier = Modifier) {
 
                 )
         }
-    ) {
+    ) { it ->
         val bottomPadding = it.calculateBottomPadding()
 
      NavHost(
@@ -111,10 +119,47 @@ fun NewsNavigator(modifier: Modifier = Modifier) {
                  navigateToSearch = {
                      navigateToTop(navController,Route.SearchScreen.route)
                  },
-                 navigateToDetails = {
-                     navigateToTop(navController,Route.DetailsScreen.route)
+                 navigateToDetails = {article->
+                     navigateToDetails(
+                         navController,article
+                     )
                  }
              )
+         }
+
+         composable(route=Route.SearchScreen.route){
+             val viewModel: SearchViewModel = hiltViewModel()
+             SearchScreen(
+                 state = viewModel.state.value,
+                 event = {
+                     viewModel.onEvent(it)
+                 },
+                 navigateToDetails = {article->
+                     navigateToDetails(
+                         navController,
+                         article
+                     )
+                 }
+             )
+         }
+         composable(route=Route.DetailsScreen.route){
+             val viewModel: DetailsViewModel = hiltViewModel()
+             //TODO: Handle side Effect
+
+             if (viewModel.sideEffect !=null){
+                 Toast.makeText(LocalContext.current,viewModel.sideEffect,Toast.LENGTH_SHORT).show()
+                 viewModel.onEvent(DetailsEvent.RemoveSideEffect)
+             }
+             navController.previousBackStackEntry?.savedStateHandle?.get<Article>("article")?.let { article->
+                 DetailsScreen(article = article, event =viewModel::onEvent, navigateUp = {navController.navigateUp()} )
+             }
+         }
+
+         composable(route=Route.BookmarkScreen.route){
+             val viewModel: BookmarkViewModel = hiltViewModel()
+             BookmarkScreen(state = viewModel.state.value, navigateToDetails = {
+                 navigateToDetails(navController, article = it)
+             })
          }
      }
     }
@@ -134,5 +179,6 @@ private fun navigateToTop(navController: NavController,route:String){
 }
 
 private fun navigateToDetails(navController: NavController,article: Article){
-    navController.currentBackStackEntry?.savedStateHandle?.set("article",article)
+    navController.currentBackStackEntry?.savedStateHandle?.set("article",`article`)
+    navController.navigate(Route.DetailsScreen.route)
 }

@@ -14,7 +14,7 @@ newsUseCases: NewsUseCases
 ) : ViewModel(){
 
     val news = newsUseCases.getNews(
-        sources = listOf("bbc-news","abc-news","google-news-in")
+        sources = listOf("abc-news","google-news-in")
     ).cachedIn(viewModelScope)
 
 }
